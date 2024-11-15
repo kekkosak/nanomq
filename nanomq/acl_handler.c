@@ -86,13 +86,14 @@ replace_topic(char *origin, conn_param *param)
 
 	if (conn_param_get_clientid(param) != NULL) {
 		result = replace_placeholder(topic, placeholder_clientid,
-		    (const char *) conn_param_get_clientid(param));
+			(const char *) conn_param_get_clientid(param));
 	}
 	if (conn_param_get_username(param) != NULL) {
+		char* result2 = replace_placeholder(result ? result: topic, placeholder_username,
+			(const char *) conn_param_get_username(param));
 		if (result != NULL)
 			nng_strfree(result);
-		result = replace_placeholder(topic, placeholder_username,
-	    (const char *) conn_param_get_username(param));
+		result = result2;
 	}
 	
 	return result;
